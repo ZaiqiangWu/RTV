@@ -13,7 +13,7 @@ We provide an example of a recorded video [here](https://huggingface.co/datasets
 
 ## Step 2
 Performing garment segmentation to the recorded video.
-there are many available methods. We recommend [this repository](https://github.com/heyoeyo/muggled_sam), which requires only minimal interaction to achieve desirable garment segmentation results.
+There are many available methods, we recommend [this repository](https://github.com/heyoeyo/muggled_sam), which requires only minimal interaction to achieve desirable garment segmentation results.
 
 <img src="assets/demo/Screenshot.png" alt="Description" height="500" />
 
