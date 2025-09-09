@@ -96,6 +96,7 @@ def gen_dataset(source_path, mask_dir,dataset_name):
         #torso_leg_img = IUV2TorsoLeg(raw_IUV)
 
         raw_mask = cv2.imread(raw_mask_path,cv2.IMREAD_UNCHANGED)[:,:,3]
+        raw_mask=cv2.resize(raw_mask,(width,height))
 
 
 
