@@ -11,7 +11,7 @@ import torch
 from util.multithread_video_loader import MultithreadVideoLoader
 from util.image_caption import ImageCaption
 import time
-from SMPL.smpl_np import SMPLModel
+from SMPL.smpl_np_base import SMPLModel
 from SMPL.smpl_regressor import SMPL_Regressor
 from SMPL.pose_filter import PoseFilter, OfflineFilter
 import glm
