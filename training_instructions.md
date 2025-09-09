@@ -21,6 +21,10 @@ There are many available methods, we recommend [this repository](https://github.
 Exporting the segmentation results as a tar file. We provide an example of a tar file [here](https://huggingface.co/datasets/wuzaiqiang/Per-GarmentDataset/blob/main/example_video/000_obj1_0_to_2135_frames.tar).
 
 ## Step 3
-Create a directory and extract the tar file inside this directory.
+Create a directory and extract the tar file inside this directory. Run the following command to generate a per-garment dataset.
+
+```
+python DatasetGeneration/upperbody_dataset_generation.py --video_path <path to video> --mask_dir <path to mask dir> --dataset_name <name of this garment>
+```
 
 Work in progress ...
