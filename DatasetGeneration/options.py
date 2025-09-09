@@ -7,8 +7,8 @@ class BaseOptions():
         self.initialized = False
 
     def initialize(self):
-        self.parser.add_argument('--video_path', type=str, help='the path of video')
-        self.parser.add_argument('--mask_dir', type=str, help='the path of mask images')
+        self.parser.add_argument('--video_path', type=str, default='./example_video.mp4',help='the path of video')
+        self.parser.add_argument('--mask_dir', type=str, default='./example_video',help='the path of mask images')
         self.parser.add_argument('--dataset_name', type=str, default='example_dataset', help='name of the dataset')
         self.initialized=True
 

@@ -9,7 +9,6 @@ import util.util as util
 import torch
 #from util.video_loader import VideoLoader
 from util.multithread_video_loader import MultithreadVideoLoader
-from util.image2video import Image2VideoWriter
 from util.image_caption import ImageCaption
 import time
 from SMPL.smpl_np import SMPLModel
@@ -30,6 +29,7 @@ from util.densepose_util import IUV2UpperBodyImg, IUV2TorsoLeg
 #from util.SlideWindowMaskRefine import slide_window_garment_mask_refine
 import json
 from DatasetGeneration.options import BaseOptions
+from util.file_io import get_file_path_list
 
 
 
@@ -44,21 +44,16 @@ def make_video_loader(source_path):
     return source_dataset_new
 
 
-def make_flat_renderer(height, width):
-    texPath ='./assets/color_pattern/board_300x300.png'
-    flat_render = FlatRenderer(height, width, texPath=texPath,back_black=True)
-    return flat_render
 
 
-def gen_dataset(source_path, dataset_name):
+def gen_dataset(source_path, mask_dir,dataset_name):
     video_loader = make_video_loader(source_path)
     smpl_regressor = SMPL_Regressor(use_bev=True,fix_body=True)
     densepose_extractor = DensePoseExtractor()
+    mask_lists= get_file_path_list(mask_dir,'png')
+    assert len(mask_lists)==len(video_loader), "Number of masks and video frames are inconsistent!"
 
 
-
-    flat_renderer = None
-    pre_trans = None
     #human_parser = MultiscaleCihpHumanParser()
     upper_body=UpperBodySMPL()
     target_path = os.path.join('./PerGarmentDatasets', dataset_name)
@@ -70,6 +65,7 @@ def gen_dataset(source_path, dataset_name):
 
     for i in tqdm(range(len(video_loader))):
         raw_image = video_loader.cap()
+        raw_mask_path=mask_lists[i]
         if raw_image is None:
             break
         height = raw_image.shape[0]
@@ -84,49 +80,27 @@ def gen_dataset(source_path, dataset_name):
         # print(list(smpl_param.keys()))
         if smpl_param is None:
             continue
-
-        triangles = smpl_param['smpl_face'].cpu().numpy().astype(np.int32)
-        cam_trans = smpl_param['cam_trans']
-        depth_order = torch.sort(cam_trans[:, 2].cpu(), descending=False).indices.numpy()
-        vertices = smpl_param['verts_camed_org'][depth_order].cpu().numpy()
-        if pre_trans is not None:
-            cam_trans[0][0:2] = cam_trans[0][0:2] * 0.5 + pre_trans[0:2] * 0.5
-            cam_trans[0][2] = cam_trans[0][2] * 0.01 + pre_trans[2] * 0.99
-        pre_trans = cam_trans[0]
         vertices = smpl_regressor.get_raw_verts(smpl_param)
         vertices = torch.from_numpy(vertices).unsqueeze(0)
 
         v = vertices
 
         raw_vm = upper_body.render(v[0], height=new_height, width=new_width)
-        # raw_vm = flat_renderer.render(v[0], uv/ratio, f.reshape(-1), np.array(model.to_list()), np.array(view.to_list()),
-        #                              np.array(projection.to_list()))
-
-        # rendered = ((rendered.astype(np.float32) + raw_image.astype(np.float32))/2).astype(np.uint8)
 
 
-        #IUV = densepose_extractor.get_IUV(roi_img)
-        #dp_img = IUV2UpperBodyImg(IUV)
+
         raw_IUV = densepose_extractor.get_IUV(resized_image,isRGB=False)
         if raw_IUV is None:
             continue
         #raw_dp_img = densepose_extractor.IUV2img(raw_IUV)
         #torso_leg_img = IUV2TorsoLeg(raw_IUV)
 
-
-
-
-
-
-        #refined_raw_garment_mask_img = slide_window_garment_mask_refine(human_parser, num_window=3, raw_image=resized_image)
-        refined_raw_garment_mask_img = human_parser.GetCihpGarmentMask(resized_image,isRGB=False)
-        refined_raw_garment_mask_img = refined_raw_garment_mask_img.astype(np.uint8) * 255
-        refined_raw_garment_mask_img_tmp = cv2.resize(refined_raw_garment_mask_img, (width, height))
+        raw_mask = cv2.imread(raw_mask_path,cv2.IMREAD_UNCHANGED)[:,:,3]
 
 
 
         raw_garment = raw_image.copy()
-        raw_garment[refined_raw_garment_mask_img_tmp<127] = 0
+        raw_garment[raw_mask<127] = 0
         roi_garment_img = cv2.warpAffine(raw_garment, trans2roi, (resolution, resolution),
                                          flags=cv2.INTER_LINEAR,
                                          borderMode=cv2.BORDER_CONSTANT,
@@ -139,7 +113,7 @@ def gen_dataset(source_path, dataset_name):
         trans2roi_path = os.path.join(target_path, str(i).zfill(5) + '_trans2roi.npy')
         cv2.imwrite(garment_path,roi_garment_img)
         cv2.imwrite(vm_path,raw_vm)
-        cv2.imwrite(mask_path,refined_raw_garment_mask_img)
+        cv2.imwrite(mask_path,raw_mask)
         np.save(iuv_path, raw_IUV)
         np.save(trans2roi_path, trans2roi)
     dataset_info = {
@@ -161,8 +135,8 @@ def mask2img(mask):
 
 
 
-def process_video(v_path,dataset_name):
-    gen_dataset(v_path, dataset_name)
+def process_video(v_path,mask_dir,dataset_name):
+    gen_dataset(v_path, mask_dir,dataset_name)
 
 
 if __name__ == '__main__':
@@ -171,7 +145,7 @@ if __name__ == '__main__':
     video_path = opt.video_path
     mask_dir = opt.mask_dir
     dataset_name = opt.dataset_name
-    process_video('./VideoDatasets/mgirl/01.mp4', dataset_name='mgirl_00')
+    process_video(video_path, mask_dir,dataset_name=dataset_name)
 
 
 
