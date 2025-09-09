@@ -14,7 +14,7 @@ Please note that you don't need to strictly follow the predefined poses (the mor
 Performing garment segmentation to the recorded video.
 there are many available methods. We recommend [this repository](https://github.com/heyoeyo/muggled_sam), which requires only minimal interaction to achieve desirable garment segmentation results.
 
-<img src="assets/demo/Screenshot.png" alt="Description" height="300" />
+<img src="assets/demo/Screenshot.png" alt="Description" height="500" />
 
 
 Exporting the segmentation results as a tar file.
