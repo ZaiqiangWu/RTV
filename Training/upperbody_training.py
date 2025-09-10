@@ -4,9 +4,9 @@ import numpy as np
 import sys
 sys.path.append(os.path.abspath(os.path.join(__file__, "..","..")))
 from collections import OrderedDict
-from model.U_Transformer.u_transformer import U_Transformer
 
-from Datasets.human_mannequin.raw_human_mannequin import RawHumanMannequin
+
+from Datasets.upperbody_garment.upperbody_garment import UpperBodyGarment
 from options.train_options import TrainOptions
 from model.pix2pixHD.models import create_model
 import util.util as util
@@ -22,12 +22,13 @@ def main():
     if opt.dataset_path is not None:
         dataset_paths = opt.dataset_path
         path_list = dataset_paths.split(',')
-        dataset = RawHumanMannequin(path_list[0],img_size=opt.img_size)
+        dataset = UpperBodyGarment(path_list[0],img_size=opt.img_size)
         if len(path_list) > 1:
             for i in range(1,len(path_list)):
-                dataset = dataset + RawHumanMannequin(path_list[i], img_size=opt.img_size)
+                dataset = dataset + UpperBodyGarment(path_list[i], img_size=opt.img_size)
     else:
-        dataset=RawHumanMannequin(img_size=opt.img_size)
+        print("Please specify a dataset for training!")
+        exit(0)
     dataset_size=len(dataset)
     dataloader=torch.utils.data.DataLoader(dataset, batch_size=opt.batchSize, shuffle=True, sampler=None, batch_sampler=None, num_workers=0, collate_fn=None, pin_memory=False, drop_last=False, timeout=0, worker_init_fn=None, multiprocessing_context=None)
     model=create_model(opt)
