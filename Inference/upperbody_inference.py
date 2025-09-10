@@ -13,7 +13,7 @@ def process_video(video_path, garment_name):
     video_loader = MultithreadVideoLoader(video_path,max_height=1024)
     video_writer = MultithreadVideoWriter(outvid='./output.mp4',fps=video_loader.get_fps())
     frame_processor = FrameProcessor([garment_name,],ckpt_dir='./checkpoints/')
-    frame_processor.set_target_garment(0)
+    frame_processor.switch_to_target_garment(0)
     for i in tqdm(range(len(video_loader))):
         frame = video_loader.cap()
         result = frame_processor(frame)
