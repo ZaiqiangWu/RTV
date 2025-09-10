@@ -26,5 +26,14 @@ Create a directory and extract the tar file inside this directory. Run the follo
 ```
 python DatasetGeneration/upperbody_dataset_generation.py --video_path <path to video> --mask_dir <path to mask dir> --dataset_name <name of this garment>
 ```
+A dataset will be generated under `./PerGarmentDatasets`.
+
+## Step 4
+Train your own garment checkpoint using this command:
+```
+python Training/upperbody_training.py  --model pix2pixHD_RGBA --input_nc 6 --output_nc=4 --batchSize 4 --img_size 512 --dataset_path ./PerGarmentDatasets/<dataset name> --name <garment name> --niter 80 --niter_decay 80
+```
+
+## Step 5
 
 Work in progress ...
