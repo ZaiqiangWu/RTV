@@ -64,3 +64,9 @@ python rtl_demo.py
     primaryClass={cs.GR}
 }
 ```
+
+## License
+This project is licensed under a custom Apache 2.0-based license with a **Non-Commercial Use** clause.  
+You may use, modify, and share the code freely for non-commercial purposes.  
+Commercial use requires prior written permission from the author.  
+See the [LICENSE](./LICENSE) file for details.
