@@ -70,7 +70,7 @@ class FrameProcessor:
                 self.viton_model_list[i]= new_model
 
     def load_one_models(self, garment_name):
-        new_model = make_pix2pix_model(garment_name, 6, output_nc=4)
+        new_model = make_pix2pix_model(garment_name, 6, output_nc=4,ckpt_dir=self.ckpt_dir)
         id = self.garment_name_list.index(garment_name)
         if self.viton_model_list[id] is None:
             self.viton_model_list[id]= new_model
