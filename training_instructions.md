@@ -36,6 +36,6 @@ python Training/upperbody_training.py  --model pix2pixHD_RGBA --input_nc 6 --out
 A checkpoint will be generated under `./Pe`.
 
 ## Step 5
-Run this command to use your trained checkpoint for virtual try-on. We provide an example video as input here.
+Run this command to use your trained checkpoint for virtual try-on. We provide an example video as input [here](https://huggingface.co/datasets/wuzaiqiang/Per-GarmentDataset/blob/main/example_input.mp4).
 
 Work in progress ...
