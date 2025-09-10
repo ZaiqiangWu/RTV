@@ -37,5 +37,7 @@ A checkpoint will be generated under `./Pe`.
 
 ## Step 5
 Run this command to use your trained checkpoint for virtual try-on. We provide an example video as input [here](https://huggingface.co/datasets/wuzaiqiang/Per-GarmentDataset/blob/main/example_input.mp4).
-
+```
+python Inference/upperbody_inference.py --input_video <input video path> --garment_name <garment name>
+```
 Work in progress ...
