@@ -33,7 +33,9 @@ Train your own garment checkpoint using this command:
 ```
 python Training/upperbody_training.py  --model pix2pixHD_RGBA --input_nc 6 --output_nc=4 --batchSize 4 --img_size 512 --dataset_path ./PerGarmentDatasets/<dataset name> --name <garment name> --niter 80 --niter_decay 80
 ```
+A checkpoint will be generated under `./Pe`.
 
 ## Step 5
+Run this command to use your trained checkpoint for virtual try-on. We provide an example video as input here.
 
 Work in progress ...
