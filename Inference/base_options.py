@@ -7,10 +7,8 @@ class BaseOptions():
         self.initialized = False
 
     def initialize(self):
-        self.parser.add_argument('--input', type=str, help='the path of input file')
-        self.parser.add_argument('--output', type=str, help='the path of output file')
-        self.parser.add_argument('--target_id', type=int, default=0, help='id of the target garment')
-        self.parser.add_argument('--background_id', type=int, default=-1, help='id of the target garment, set it to -1 if you do not want to change the banckground')
+        self.parser.add_argument('--input_video', type=str, help='the path of input video file')
+        self.parser.add_argument('--garment_name', type=str, default='example_garment', help='id of the target garment')
         self.initialized=True
 
     def parse(self):

@@ -27,7 +27,7 @@ from util.densepose_util import IUV2UpperBodyImg, IUV2TorsoLeg, IUV2SDP
 from threading import Thread
 
 
-def make_pix2pix_model(name, input_nc, output_nc=3, model_name='pix2pixHD'):
+def make_pix2pix_model(name, input_nc, output_nc=3, model_name='pix2pixHD',ckpt_dir=None):
     opt = TestOptions().parse(save=False, use_default=True, show_info=False)
     opt.nThreads = 1  # test code only supports nThreads = 1
     opt.batchSize = 1  # test code only supports batchSize = 1
@@ -38,7 +38,10 @@ def make_pix2pix_model(name, input_nc, output_nc=3, model_name='pix2pixHD'):
     opt.output_nc = output_nc
     opt.isTrain = False
     opt.model = model_name
-    opt.checkpoints_dir='./rtv_ckpts'
+    if ckpt_dir is None:
+        opt.checkpoints_dir='./rtv_ckpts'
+    else:
+        opt.checkpoints_dir=ckpt_dir
     opt.gpu_ids=''#load to cpu
     model = create_model(opt)
     # print(model)
@@ -46,9 +49,10 @@ def make_pix2pix_model(name, input_nc, output_nc=3, model_name='pix2pixHD'):
 
 
 class FrameProcessor:
-    def __init__(self, garment_name_list):
+    def __init__(self, garment_name_list,ckpt_dir=None):
         self.smpl_regressor = SMPL_Regressor(use_bev=True)
         self.viton_model = None
+        self.ckpt_dir = ckpt_dir
         self.densepose_extractor = DensePoseExtractor()
         self.upper_body = UpperBodySMPL()
         self.garment_name_list = garment_name_list#[2, 3, 17, 18, 22]
@@ -61,7 +65,7 @@ class FrameProcessor:
 
     def load_all_models(self):
         for i, garment_name in enumerate(self.garment_name_list):
-            new_model = make_pix2pix_model(garment_name, 6, output_nc=4)
+            new_model = make_pix2pix_model(garment_name, 6, output_nc=4,ckpt_dir=self.ckpt_dir)
             if self.viton_model_list[i] is None:
                 self.viton_model_list[i]= new_model
 
