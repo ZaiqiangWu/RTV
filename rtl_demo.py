@@ -15,12 +15,13 @@ from util.image_warp import crop2_169, resize_img
 from VITON.viton_upperbody import FrameProcessor
 from util.camera_util import list_available_cameras
 
+
 class VitonThread(QThread):
     frameCaptured = pyqtSignal(QImage)
 
     def __init__(self,garment_id_list):
         super().__init__()
-        self.cap = cv2.VideoCapture(0)
+        self.cap = self.get_camera()
         if not self.cap.isOpened():
             print("Failed to open the selected camera.")
         self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
@@ -30,6 +31,13 @@ class VitonThread(QThread):
     def set_taregt_id(self, id):
         print(id)
         self.frame_processor.set_target_garment(id)
+
+    def get_camera(self):
+        cap = cv2.VideoCapture(1)
+
+        if not cap.isOpened():
+            cap = cv2.VideoCapture(0)
+        return cap
 
     def run(self):
         while self.running:
