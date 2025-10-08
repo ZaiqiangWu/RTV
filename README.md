@@ -47,14 +47,16 @@ python rtl_demo.py
 
 ## BibTeX
 ```text
-@misc{wu2025realtime,
-    title={Real-Time Per-Garment Virtual Try-On with Temporal Consistency for Loose-Fitting Garments},
-    author={Zaiqiang Wu and I-Chao Shen and Takeo Igarashi},
-    year={2025},
-    eprint={2506.12348},
-    archivePrefix={arXiv},
-    primaryClass={cs.GR}
+@article{10.1111:cgf.70272,
+journal = {Computer Graphics Forum},
+title = {{Real-Time Per-Garment Virtual Try-On with Temporal Consistency for Loose-Fitting Garments}},
+author = {Wu, Zaiqiang and Shen, I-Chao and Igarashi, Takeo},
+year = {2025},
+publisher = {The Eurographics Association and John Wiley & Sons Ltd.},
+ISSN = {1467-8659},
+DOI = {10.1111/cgf.70272}
 }
+
 @misc{wu2025lowbarrier,
     title={Low-Barrier Dataset Collection with Real Human Body for Interactive Per-Garment Virtual Try-On},
     author={Zaiqiang Wu and Yechen Li and Jingyuan Liu and Yuki Shibata and Takayuki Hori and I-Chao Shen and Takeo Igarashi},
