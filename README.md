@@ -47,14 +47,13 @@ python rtl_demo.py
 
 ## BibTeX
 ```text
-@article{10.1111:cgf.70272,
-journal = {Computer Graphics Forum},
-title = {{Real-Time Per-Garment Virtual Try-On with Temporal Consistency for Loose-Fitting Garments}},
-author = {Wu, Zaiqiang and Shen, I-Chao and Igarashi, Takeo},
-year = {2025},
-publisher = {The Eurographics Association and John Wiley & Sons Ltd.},
-ISSN = {1467-8659},
-DOI = {10.1111/cgf.70272}
+@inproceedings{wu2025real,
+  title={Real-Time Per-Garment Virtual Try-On with Temporal Consistency for Loose-Fitting Garments},
+  author={Wu, Zaiqiang and Shen, I-Chao and Igarashi, Takeo},
+  booktitle={Computer Graphics Forum},
+  pages={e70272},
+  year={2025},
+  organization={Wiley Online Library}
 }
 
 @misc{wu2025lowbarrier,
