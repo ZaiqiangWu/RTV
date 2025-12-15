@@ -27,8 +27,8 @@ sudo apt install qtbase5-dev qtbase5-dev-tools libqt5gui5 libqt5widgets5 libqt5m
 conda create -n rtv python=3.9
 conda activate rtv
 pip install -r requirements.txt
-pip install detectron2@git+https://github.com/facebookresearch/detectron2.git
-pip install git+https://github.com/ZaiqiangWu/ROMP.git#subdirectory=simple_romp
+pip install --no-build-isolation detectron2@git+https://github.com/facebookresearch/detectron2.git
+pip install --no-build-isolation git+https://github.com/ZaiqiangWu/ROMP.git#subdirectory=simple_romp
 ```
 
 ### Weights
