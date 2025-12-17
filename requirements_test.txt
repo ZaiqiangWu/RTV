@@ -3,7 +3,7 @@ torch==2.4.0
 torchvision==0.19.0
 opencv-python-headless~=4.10.0.84
 scipy>=1.11.4
-pillow~=9.2.0
+pillow>=10.0.0
 matplotlib~=3.5.1
 
 ffmpeg~=1.4
