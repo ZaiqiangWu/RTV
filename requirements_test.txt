@@ -16,7 +16,7 @@ scikit-image~=0.21.0
 imageio~=2.31.3
 imageio-ffmpeg
 #joblib~=1.1.0
-cython~=0.29.32
+cython
 #munkres~=1.1.4
 #plotly~=5.11.0
 #pandas~=1.4.3
