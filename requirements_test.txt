@@ -21,7 +21,8 @@ cython~=0.29.32
 #plotly~=5.11.0
 #pandas~=1.4.3
 scikit-learn>=1.4.0
-setuptools~=65.6.3
+setuptools>=80.9.0
+wheel>=0.45.1
 pyqt5~=5.15.11
 trimesh
 PyOpenGL
